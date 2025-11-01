@@ -1,4 +1,4 @@
 package tuitionapp.ui;
 
-public class MainMenu {
+public class MainFrame {
 }
