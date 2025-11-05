@@ -69,7 +69,7 @@ public class Student implements Serializable {
     
     // Setters
     public void setStudentId(String studentId) {
-        this.studentId = studentId;
+        this.studentId = studentId
     }
     
     public void setName(String name) {
