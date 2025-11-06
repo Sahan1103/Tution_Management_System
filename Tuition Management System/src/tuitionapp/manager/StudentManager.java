@@ -21,7 +21,6 @@ public class StudentManager {
     // ----------------------------------------------------------------------
 
 
-
     /** Saves the current in-memory database to the file system. */
     public void saveData() {
         fileManager.saveStudents(this.studentDatabase);
