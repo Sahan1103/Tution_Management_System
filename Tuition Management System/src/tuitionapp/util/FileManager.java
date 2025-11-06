@@ -1,11 +1,8 @@
 package tuitionapp.util;
-import tuitionapp.model.Student;
-
 import java.io.*;
 import java.nio.file.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 /**
  * FileManager class handles all file operations for the tuition management system.
@@ -71,6 +68,7 @@ public class FileManager {
             System.out.println("Error writing to file: " + filePath);
             System.out.println("Error message: " + e.getMessage());
         }
+
     }
 
     /**
@@ -130,7 +128,11 @@ public class FileManager {
             return false;
         }
     }
-
+    public void saveStudents(java.util.Map<java.lang.String, tuitionapp.model.Student> students) {
+        // This method will contain the logic to write 'students' to a file.
+        // For now, this placeholder resolves the error:
+        System.out.println("LOG: Data save requested for " + students.size() + " students.");
+    }
     /**
      * Check if a file exists
      * @param filePath Path to the file
@@ -248,10 +250,4 @@ public class FileManager {
         }
         return -1;
     }
-    }
-
-
-
-
-
-
+}

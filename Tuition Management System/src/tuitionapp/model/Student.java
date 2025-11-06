@@ -18,7 +18,7 @@ public class Student implements Serializable {
     private double paidAmount;
     
     // Default Constructor
-    public Student() {
+    public Student(String id, String name1, String contact, int grade) {
     }
     
     // Parameterized Constructor
@@ -168,5 +168,13 @@ public class Student implements Serializable {
     @Override
     public int hashCode() {
         return studentId != null ? studentId.hashCode() : 0;
+    }
+
+    public void setContact(String newContact) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    public void setGrade(int newGrade) {
+        throw new UnsupportedOperationException("Not supported yet.");
     }
 }

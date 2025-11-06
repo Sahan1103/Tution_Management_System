@@ -1,103 +1,106 @@
+
 package tuitionapp.manager;
 
+import java.util.HashMap;
+import java.util.Map;
 import tuitionapp.model.Student;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import tuitionapp.util.FileManager;
 
-/**
- * StudentManager class is responsible for managing a collection of Student objects.
- * It handles operations such as adding new students, finding students by ID,
- * and retrieving a list of all students.
- * <p>
- * In a full application, this class would typically interact with a data layer
- * (like a database or the FileManager) to persist the data.
- * </p>
- *
- * @author Your Name
- * @version 1.0
- * @since 2023-11-05
- */
-public class StudentManager {
+    public class StudentManager {
 
-    /**
-     * The in-memory storage for all student records.
-     * Uses a List for ordered storage, but in a real app, a Map<String, Student>
-     * might be better for quick ID lookup.
-     */
-    private final List<Student> students;
+        private Map<String, Student> studentDatabase;
+        private final FileManager fileManager;
 
-    /**
-     * Constructs a new StudentManager and initializes the student storage.
-     */
-    public StudentManager() {
-        this.students = new ArrayList<>();
-        // Note: In a real system, you'd call a FileManager here to load initial data.
-    }
-
-    // --- Core Management Operations ---
-
-    /**
-     * Adds a new student to the management system.
-     * <p>
-     * Before adding, it checks if a student with the same ID already exists.
-     * </p>
-     *
-     * @param student The {@link Student} object to be added.
-     * @return {@code true} if the student was successfully added, {@code false} if a student with the ID already exists.
-     */
-    public boolean addStudent(Student student) {
-        if (findStudentById(student.getStudentId()).isPresent()) {
-            return false; // Student ID already exists
+        // --- Constructor (Dependency Injection) ---
+        public StudentManager(FileManager fileManager) {
+            this.fileManager = fileManager;
+            this.studentDatabase = new HashMap<>();
         }
-        return students.add(student);
-    }
 
-    /**
-     * Retrieves a student by their unique ID.
-     *
-     * @param studentId The unique ID of the student to find.
-     * @return An {@link Optional} containing the {@link Student} if found,
-     * or an empty Optional if no student with the given ID exists.
-     */
-    public Optional<Student> findStudentById(String studentId) {
-        return students.stream()
-                .filter(s -> s.getStudentId().equals(studentId))
-                .findFirst();
-    }
+        // ----------------------------------------------------------------------
+        // I/O METHODS (Save to File, Load from File)
+        // ----------------------------------------------------------------------
 
-    /**
-     * Removes a student from the system using their ID.
-     *
-     * @param studentId The ID of the student to remove.
-     * @return {@code true} if the student was successfully found and removed, {@code false} otherwise.
-     */
-    public boolean removeStudent(String studentId) {
-        Optional<Student> studentToRemove = findStudentById(studentId);
-        if (studentToRemove.isPresent()) {
-            return students.remove(studentToRemove.get());
+        /** Loads student data from the file system using the FileManager. */
+
+
+        /** Saves the current in-memory database to the file system. */
+        public void saveData() {
+            fileManager.saveStudents(this.studentDatabase);
         }
-        return false;
-    }
 
-    /**
-     * Gets an immutable list of all students currently in the system.
-     *
-     * @return A {@link List} of all {@link Student} objects.
-     */
-    public List<Student> getAllStudents() {
-        // Return a copy to prevent external modification of the internal list
-        return new ArrayList<>(students);
-    }
+        // ----------------------------------------------------------------------
+        // CRUD OPERATIONS
+        // ----------------------------------------------------------------------
 
-    // --- Utility/Reporting Operations ---
+        /** * ADD DETAILS (Create)
+         * Adds a new student to the database and saves the changes.
+         */
+        public void createStudent(String id, String name, String contact, int grade) {
+            // Validation: Check for duplicates
+            if (studentDatabase.containsKey(id)) {
+                System.err.println("ERROR: Student ID " + id + " already exists. Cannot add.");
+                return;
+            }
 
-    /**
-     * Counts the total number of students currently enrolled.
-     *
-     * @return The count of students.
-     */
-    public int getStudentCount() {
-        return students.size();
+            // 1. Create and add to in-memory database
+            Student newStudent = new Student(id, name, contact, grade);
+            studentDatabase.put(id, newStudent);
+
+            // 2. Save the changes to the file
+            saveData();
+            System.out.println("SUCCESS: Student " + name + " added.");
+        }
+
+        /** * SEARCH STUDENT (Read - Single)
+         * Finds and returns a Student object by ID. Returns null if not found.
+         */
+        public Student findStudent(String id) {
+            return studentDatabase.get(id);
+        }
+
+        /** * EDIT DETAILS (Update)
+         * Finds a student and updates their name, contact, and grade, then saves.
+         */
+        public void editStudentDetails(String id, String newName, String newContact, int newGrade) {
+            Student studentToEdit = studentDatabase.get(id);
+
+            // Validation
+            if (studentToEdit == null) {
+                System.err.println("ERROR: Student ID " + id + " not found. Cannot edit.");
+                return;
+            }
+
+            // 1. Update the fields
+            studentToEdit.setName(newName);
+            studentToEdit.setContact(newContact);
+            studentToEdit.setGrade(newGrade);
+
+            // 2. Save the changes to the file
+            saveData();
+            System.out.println("SUCCESS: Details for Student ID " + id + " updated.");
+        }
+
+        /** * REMOVE STUDENT (Delete)
+         * Removes a student by ID and saves the changes.
+         */
+        public void deleteStudent(String id) {
+            // Validation
+            if (!studentDatabase.containsKey(id)) {
+                System.err.println("ERROR: Student ID " + id + " not found. Cannot delete.");
+                return;
+            }
+
+            // 1. Remove from the map
+            studentDatabase.remove(id);
+
+            // 2. Save the changes to the file
+            saveData();
+            System.out.println("SUCCESS: Student with ID " + id + " deleted.");
+        }
+
+        /** Gets the entire map of all students. */
+        public Map<String, Student> getAllStudents() {
+            return this.studentDatabase;
+        }
     }
-}
