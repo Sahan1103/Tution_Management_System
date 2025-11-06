@@ -248,10 +248,7 @@ public class FileManager {
         }
         return -1;
     }
+
+    public void saveStudents(Map<String, Student> studentDatabase) {
     }
-
-
-
-
-
-
+}
