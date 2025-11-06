@@ -20,9 +20,6 @@ public class StudentManager {
     // I/O METHODS (Save to File, Load from File)
     // ----------------------------------------------------------------------
 
-    /** Loads student data from the file system using the FileManager. */
-
-
     /** Saves the current in-memory database to the file system. */
     public void saveData() {
         fileManager.saveStudents(this.studentDatabase);

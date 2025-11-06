@@ -18,7 +18,7 @@ public class Student implements Serializable {
     private double paidAmount;
     
     // Default Constructor
-    public Student() {
+    public Student(String id, String name, String contact, int grade) {
     }
     
     // Parameterized Constructor
@@ -168,5 +168,11 @@ public class Student implements Serializable {
     @Override
     public int hashCode() {
         return studentId != null ? studentId.hashCode() : 0;
+    }
+
+    public void setGrade(int newGrade) {
+    }
+
+    public void setContact(String newContact) {
     }
 }
