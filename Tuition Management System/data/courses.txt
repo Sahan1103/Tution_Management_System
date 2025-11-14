@@ -1,0 +1,4 @@
+CRS0002,SFT,No description,Dasun Jayaweera,2000.00,24,Monday-6pm-8pm,20,3
+CRS0003,ET,No description,Dasun Karunarathna,5000.00,24,Friday-4pm-6.00pm,20,3
+CRS0004,ICT,No description,Ravindu Yohan,10000.00,24,Sunday-8.00pm-10.00pm,10,1
+CRS0005,BST,No description,Harsha Maduranga,3500.00,24,monday-10-12,25,0

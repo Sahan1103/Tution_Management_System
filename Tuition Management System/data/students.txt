@@ -1,0 +1,5 @@
+STU0001,Harsha,harsha@gmail.com,0761734206,Ruwanwella,SFT,,2000.00,3000.00
+STU0003,Sadan,sadan@gmail.com,0702806694,Amithirigala,ET,,5000.00,20000.00
+STU0004,Heshani,heshani@gmail.com,0776119030,Kandy,ET,,5000.00,10000.00
+STU0005,kavindu,kavindu@gmail.com,0702806690,Kandy,SFT,,2000.00,2000.00
+STU0006,kamal,kamal@gmail.com,07120806056,gampaha,ET, ICT,CRS0003|CRS0004,15000.00,15000.00
